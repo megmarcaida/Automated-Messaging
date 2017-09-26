@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>페이스복 검색</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+</head>
+<body>
+<div class="container navbar-fixed">
+    <div class="row">
+        <div class="col-xs-12 col-md-12 col-lg-12">
+            <h1>페이스복 검색</h1>
+            <p id="searchResult"></p>
+            <button class="btn btn-primary" id="ClickBtn" onclick="buttonClicked();"><!-- Run Search -->런 검색</button>
+            <button class="btn btn-primary" id="StopBtn" disabled onclick="restartScript();">Stop</button>
+        </div>
+    </div>
+</div>
+<br>
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12 col-md-12 col-lg-12">
+            <iframe src="http://192.168.6.129/excel_import/" width="100%" height="950px" frameborder="0"></iframe>
+        </div>
+    </div>
+</div>
+<script src="/socket.io/socket.io.js"></script>
+<script>
+    var socket = io.connect();
+
+    function buttonClicked(){
+        var StopBtn = document.getElementById('StopBtn')
+        var id = document.getElementById('ClickBtn')
+        StopBtn.disabled=false;
+        id.disabled=true;
+        socket.emit('clicked'); 
+    }
+
+    function restartScript(){
+        var StopBtn = document.getElementById('StopBtn')
+        var id = document.getElementById('ClickBtn')
+        StopBtn.disabled=true;
+        id.disabled=false;
+        socket.emit('restart');
+    }
+
+
+    //when we receive buttonUpdate, do this
+    socket.on('searchUpdate', function(data){
+        document.getElementById("searchResult").innerHTML = data;
+    });
+</script>
+</body>
+</html>
