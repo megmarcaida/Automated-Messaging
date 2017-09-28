@@ -2,8 +2,8 @@ if not "%minimized%"=="" goto :minimized
 set minimized=true
 @echo off
 
-cd "C:\Users\Office6-1\Documents\Migz\Development\fb\nightmare"
+cd "\\192.168.6.129\Automated-Messaging"
 
-start /min cmd /C "nodemon server.js"
+start /min cmd /C "rs"
 goto :EOF
 :minimized
